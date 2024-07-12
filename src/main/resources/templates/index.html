@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="mx-5">
+        <h1 class="text-center">Students detail</h1>
+    </div>
+    <div class="mt-5 mx-5">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Email</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Action</th>
+
+        </tr>
+        </thead>
+        <tbody th:each="student:${students}">
+
+            <th scope="row" th:text="${student.StudentId}"></th>
+            <td th:text="${student.StudentName}"></td>
+            <td th:text="${student.studentMobile}"></td>
+            <td th:text="${student.StudentEmail}"></td>
+            <td th:text="${#temporals.format(student.StudentDOB, 'dd/MM/yyyy')}"></td>
+            <td th:text="${student.StudentGender}"></td>
+            <td>
+                <div>
+                    <a th:href="@{update/{id}(id=${student.studentId})}" class="btn btn-primary mx-3">Update</a>
+                    <a th:href="@{delete/{id}(id=${student.studentId})}" class="btn btn-danger"
+                       th:attr="onclick=${'return confirmDeletion(' + student.studentId + ')'}" >Delete</a>
+                </div>
+            </td>
+
+        </tbody>
+    </table>
+    </div>
+    <div class="container text-center mt-3">
+        <a href="add" class="btn btn-success text-center">Add Student</a>
+    </div>
+    <script>
+        function confirmDeletion(studentId) {
+            return confirm("Are you sure you want to delete student with ID " + studentId + "?");
+        }
+    </script>
+</body>
+</html>
